@@ -26,7 +26,7 @@ database:
    # the password
    password: 41299701
    # the JDBC URL
-   url: jdbc:mysql://bd474772c19810:41299701@us-cdbr-iron-east-03.cleardb.net/heroku_873473f052b8949?reconnect=true
+   url: jdbc:mysql://bd474772c19810:41299701@us-cdbr-iron-east-03.cleardb.net:3306/heroku_873473f052b8949
 
 #API settings
 #API URL
