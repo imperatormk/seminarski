@@ -7,13 +7,12 @@ password: crimson
 
 #Server configuration.
 server:
-    applicationConnectors:
-          type: http
-          port: 8080
-          keyStorePath: dwstart.keystore
-          keyStorePassword: crimson
-          validateCerts: false
-          validatePeers: false
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 8080
 
 # Database settings.
 database:
