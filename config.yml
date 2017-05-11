@@ -8,10 +8,8 @@ password: crimson
 #Server configuration.
 server:
     applicationConnectors:
-        - type: http
+          type: http
           port: 8080
-        - type: https
-          port: 8443
           keyStorePath: dwstart.keystore
           keyStorePassword: crimson
           validateCerts: false
