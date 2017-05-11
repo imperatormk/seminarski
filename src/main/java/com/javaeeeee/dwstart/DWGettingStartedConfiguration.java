@@ -1,4 +1,4 @@
-package com.javaeeeee.dwstart; //com
+package com.javaeeeee.dwstart;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
