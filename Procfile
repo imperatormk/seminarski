@@ -1,1 +1,1 @@
-web: java -jar target/DWGettingStarted-1.0-SNAPSHOT.jar server config.yml
+web: $JAVA_OPTS java -jar target/DWGettingStarted-1.0-SNAPSHOT.jar server config.yml
