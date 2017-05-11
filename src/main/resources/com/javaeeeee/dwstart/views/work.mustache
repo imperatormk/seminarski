@@ -1,0 +1,27 @@
+<html>
+<head><title></title></head>
+<body>
+<div class="top">
+	<div class="fName">Subject name: {{subject.subjectName}}</div></br>
+	<div class="lName">Work title: {{title}}</div>
+	<div class="lName">Description: {{description}}</div>
+	</br>
+	
+<table border="1">
+    <th>Upload name</th>
+	<th>Student</th>
+	{{#uploadList}}
+	<tr>
+		<td><a href="/uploads/{{id}}">{{title}}</a></td>
+		<td><a href="/students/{{studentID}}">{{student.firstName}} {{student.lastName}}</a></td>	
+	</tr>
+	{{/uploadList}}
+</table>
+
+</br>
+<a href="/works/{{work.id}}/upload">
+<button>New Upload</button>
+</a>
+   
+</div>
+</body></html>

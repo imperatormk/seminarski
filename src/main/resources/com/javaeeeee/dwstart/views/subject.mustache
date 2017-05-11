@@ -1,0 +1,17 @@
+<html>
+<head><title></title></head>
+<body>
+<div class="top">
+<table border="1">
+	<div class="fName">Subject name: {{subjectName}}</div>
+	</br>
+    <th>Work name</th>
+	{{#workList}}
+	<tr>
+		<td><a href="/works/{{id}}">{{title}}</a></td>
+	</tr>
+	{{/workList}}
+</table>
+   
+</div>
+</body></html>
