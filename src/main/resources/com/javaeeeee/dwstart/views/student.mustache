@@ -1,0 +1,17 @@
+<html>
+<head><title></title></head>
+<body>
+<div class="top">
+    <div class="fName">First name: {{student.firstName}}</div>
+	<div class="lName">Last name: {{student.lastName}}</div></br>
+	<table border="1">
+    <th>Upload name</th>
+	<th>Subject</th>
+	{{#uploadList}}
+	<tr>
+		<td>{{title}}</td>
+		<td>{{work.subject.subjectName}}</td>	
+	</tr>
+	{{/uploadList}}
+</div>
+</body></html>

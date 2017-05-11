@@ -1,0 +1,16 @@
+<html>
+<head><base href="~/" /><title></title></head>
+<body>
+<div class="top">
+<table border="1">
+    <th>Teacher name</th>
+	{{#teacherList}}
+	<tr>
+		<td><a href="/teachers/{{id}}">{{firstName}} {{lastName}}</a></td>
+	</tr>
+	{{/teacherList}}
+</table>
+</br></br>
+   
+</div>
+</body></html>
