@@ -29,7 +29,7 @@ database:
    url: jdbc:mysql://bd474772c19810:41299701@us-cdbr-iron-east-03.cleardb.net:3306/heroku_873473f052b8949
    # the dialect
    properties:
-    hibernate.dialect: org.hibernate.dialect.MySQLDialect
+    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
 #API settings
 #API URL
