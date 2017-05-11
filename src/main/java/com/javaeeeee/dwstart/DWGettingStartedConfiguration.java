@@ -4,6 +4,9 @@ import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.server.DefaultServerFactory;
+import io.dropwizard.server.ServerFactory;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -26,12 +29,21 @@ public class DWGettingStartedConfiguration extends Configuration {
     @Valid
     private final DataSourceFactory dataSourceFactory
             = new DataSourceFactory();
+    
+    @Valid
+    @NotNull
+    private ServerFactory serverFactory = new DefaultServerFactory();
 
     @Valid
     @NotNull
     private final JerseyClientConfiguration jerseyClientConfiguration
             = new JerseyClientConfiguration();
 
+    @JsonProperty("server")
+    public ServerFactory getServerFactory() {
+        return serverFactory;
+    }
+    
     @JsonProperty("jerseyClient")
     public JerseyClientConfiguration getJerseyClientConfiguration() {
         return jerseyClientConfiguration;

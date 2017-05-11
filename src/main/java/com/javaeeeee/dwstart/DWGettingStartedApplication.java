@@ -9,6 +9,7 @@ import com.javaeeeee.dwstart.resources.TeacherResource;
 import com.javaeeeee.dwstart.resources.UploadResource;
 import com.javaeeeee.dwstart.resources.WorkResource;
 import io.dropwizard.Application;
+import io.dropwizard.cli.ServerCommand;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
@@ -56,6 +57,7 @@ public class DWGettingStartedApplication
             final Bootstrap<DWGettingStartedConfiguration> bootstrap) {
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(new ViewBundle());
+        bootstrap.addCommand(new ServerCommand<>(this));
         //bootstrap.addBundle(new AssetsBundle("/assets", "/assets"));
     }
     
