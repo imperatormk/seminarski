@@ -57,7 +57,6 @@ public class DWGettingStartedApplication
             final Bootstrap<DWGettingStartedConfiguration> bootstrap) {
         bootstrap.addBundle(hibernateBundle);
         bootstrap.addBundle(new ViewBundle());
-        bootstrap.addCommand(new ServerCommand<>(this));
         //bootstrap.addBundle(new AssetsBundle("/assets", "/assets"));
     }
     
