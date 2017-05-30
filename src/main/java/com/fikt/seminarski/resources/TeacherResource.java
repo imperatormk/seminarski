@@ -26,6 +26,7 @@ package com.fikt.seminarski.resources;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -35,21 +36,21 @@ import javax.ws.rs.core.MediaType;
 import org.hibernate.SessionFactory;
 
 import com.fikt.seminarski.model.Teacher;
+import com.fikt.seminarski.model.User;
 import com.fikt.seminarski.service.TeacherService;
 import com.fikt.seminarski.service.implementation.TeacherServiceImpl;
 import com.fikt.seminarski.views.TeacherListView;
 import com.fikt.seminarski.views.TeacherView;
 
+import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jersey.params.IntParam;
 
+@RolesAllowed({"admin", "student"}) 
 @Path("/teachers")
 @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class TeacherResource {
 
-    /**
-     * The DAO object to manipulate employees.
-     */
     private TeacherService teacherService;
     
     public TeacherResource(SessionFactory sessionFactory) {
@@ -58,22 +59,22 @@ public class TeacherResource {
     
     @GET
     @UnitOfWork
-    public TeacherListView getAll() {
+    public TeacherListView getAll(@Auth User user) {
     	List<Teacher> lst = teacherService.getAll();
     	return new TeacherListView(lst);
     }
     
     @GET
+    @RolesAllowed({"admin", "teacher", "student"}) 
     @Path("/{id}")
     @UnitOfWork
-    public TeacherView findById(@PathParam("id") IntParam id) {
+    public TeacherView findById(@Auth User user, @PathParam("id") IntParam id) {
     	Optional<Teacher> teaID = teacherService.getById(id.get());
-    	if (teaID.isPresent()) {
+    	if (teaID.isPresent() && (user.getId() == teaID.get().getId() || !user.getRole().equals("teacher"))) {
     		Teacher tea = teaID.get();
             return new TeacherView(tea);
     	}
     	else {
-    		System.out.println("null");
     		return null;
     	}
     }

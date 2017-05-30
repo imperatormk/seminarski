@@ -5,8 +5,9 @@
 	<div class="fName">Subject name: {{subject.subjectName}}</div></br>
 	<div class="lName">Work title: {{title}}</div>
 	<div class="lName">Description: {{description}}</div>
-	</br>
 	
+{{^isStudent}}
+</br>
 <table border="1">
     <th>Upload name</th>
 	<th>Student</th>
@@ -17,11 +18,19 @@
 	</tr>
 	{{/uploadList}}
 </table>
+{{/isStudent}}
 
+{{#isStudent}}
 </br>
 <a href="/works/{{work.id}}/upload">
-<button>New Upload</button>
+{{#isRevision}}
+<button>Upload Revision</button>
+{{/isRevision}}
+{{^isRevision}}
+<button>Upload New</button>
+{{/isRevision}}
 </a>
+{{/isStudent}}
    
 </div>
 </body></html>

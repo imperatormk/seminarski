@@ -108,6 +108,6 @@ public class LoginResource {
 		response.addCookie(new Cookie("auth_token", token.getId().toString()));
 		response.addCookie(new Cookie("auth_user", String.valueOf(user.get().getId())));
 		
-		return Response.seeOther(new URI("/uploads")).build();
+		return Response.seeOther(new URI("/")).build();
 	}
 }

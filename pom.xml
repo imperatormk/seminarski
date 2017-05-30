@@ -10,11 +10,11 @@
     </prerequisites>
 
     <groupId>com.javaeeeee</groupId>
-    <artifactId>DWGettingStarted</artifactId>
+    <artifactId>Seminarski</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>DWGettingStarted</name>
+    <name>Seminarski</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
