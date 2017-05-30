@@ -35,11 +35,6 @@ public class MainResource {
 	@GET
 	public Response main() {
 		return Response.status(200).build();
-		/*return Response.status(401).build().seeOther(new URI("/")).build();
-		Response res;
-		res.getHeaders().add("ClearAuthenticationCache", value);*/
-		
-		//return new LogoutView();
 	}
 	
 	@PermitAll

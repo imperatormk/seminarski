@@ -142,7 +142,7 @@ public class MainApplication
         
         
         
-        final PolymorphicAuthDynamicFeature feature = new PolymorphicAuthDynamicFeature<>(
+        final PolymorphicAuthDynamicFeature<User> feature = new PolymorphicAuthDynamicFeature<>(
         	    ImmutableMap.of(
         	        User.class, filterCus,
         	        OptionalUser.class, filterOpt));

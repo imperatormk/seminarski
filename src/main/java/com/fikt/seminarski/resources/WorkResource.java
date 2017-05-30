@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fikt.seminarski.model.Upload;
+import com.fikt.seminarski.model.User;
 import com.fikt.seminarski.model.Work;
 import com.fikt.seminarski.service.StudentService;
 import com.fikt.seminarski.service.UploadService;
@@ -48,6 +49,8 @@ import com.fikt.seminarski.views.WorkView;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.annotation.security.DenyAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -58,65 +61,60 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.hibernate.SessionFactory;
 
+import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jersey.params.IntParam;
 
+@DenyAll
 @Path("/works")
 @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class WorkResource {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WorkResource.class);
 
-    /**
-     * The DAO object to manipulate employees.
-     */
     private WorkService workService;
     private UploadService uploadService;
-    private StudentService studentService; //temp
+    private StudentService studentService;
     
     public WorkResource(SessionFactory sessionFactory) {
         this.workService = new WorkServiceImpl(sessionFactory);
         this.uploadService = new UploadServiceImpl(sessionFactory);
-        this.studentService = new StudentServiceImpl(sessionFactory); //temp
+        this.studentService = new StudentServiceImpl(sessionFactory);
     }
     
     @GET
     @UnitOfWork
     public WorkView getAll() {
-    	return null;
+    	return null; // list same as students and subjects, at least for teachers
     }
-    
-    /*@GET
-    @Path("/{id}")
-    @UnitOfWork
-    public List<Subject> findById(@PathParam("id") IntParam id) {
-    	Optional<Teacher> teaID = teacherService.getById(id.get());
-    	teaID.get().setSubjects(subjectService.getByTeacher(teaID.get().getId()));
-		return teaID.get().getSubjects();
-    }*/
-    
-    
+      
     @GET
     @Path("/{id}")
+    @RolesAllowed({"student", "teacher"})
     @UnitOfWork
-    public WorkView findById(@PathParam("id") IntParam id) { //don't show table here if student
+    public WorkView findById(@Auth User user, @PathParam("id") IntParam id) {
     	Optional<Work> workID = workService.getById(id.get());
     	if (workID.isPresent()) {
     		Work work = workID.get();
-            return new WorkView(work);
+    		if (work.getSubject().getTeacher().getId() == user.getId() || user.getRole().equals("student")) {
+    			return new WorkView(work, user);
+    		}
+    		else {
+    			return null;
+    		}
     	}
     	else {
-    		System.out.println("null");
     		return null;
     	}
     }
     
     @GET
     @Path("/{id}/upload")
+    @RolesAllowed({"student"})
     @UnitOfWork
-    public UploadFileView upload(@PathParam("id") IntParam id) {
+    public UploadFileView upload(@Auth User user, @PathParam("id") IntParam id) {
     	Optional<Work> workID = workService.getById(id.get());
     	if (workID.isPresent()) {
-    		List<Upload> result = studentService.getById(1).get().getUploads().stream().filter(it -> workID.get().getId() == it.getWorkID()).collect(Collectors.toList());
+    		List<Upload> result = studentService.getById(user.getId()).get().getUploads().stream().filter(it -> workID.get().getId() == it.getWorkID()).collect(Collectors.toList());
     		
     		if (result.size() > 0) {
     			if (result.get(0).getState() < 3) {
@@ -133,16 +131,17 @@ public class WorkResource {
     		}
     	}
     	else {
-    		System.out.println("null");
     		return null;
     	}
     }
     
     @POST
     @Path("/{id}/upload")
+    @RolesAllowed({"student"})
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @UnitOfWork
     public Response uploadFile(
+    		@Auth User user, 
             @FormDataParam("filename") InputStream uploadedInputStream,
             @FormDataParam("filename") FormDataContentDisposition fileDetail,
             @FormDataParam("uploadName") String uploadName,
@@ -157,7 +156,7 @@ public class WorkResource {
             
             Upload upload = null;
             if (oldID == -1) { //add verification here!
-            	upload = new Upload(1, id.get(), uploadedFileLocation, uploadName, 0, new Date(), 0);
+            	upload = new Upload(user.getId(), id.get(), uploadedFileLocation, uploadName, 0, new Date(), 0);
                 upload = uploadService.save(upload);           
             }
             else {
