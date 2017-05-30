@@ -1,7 +1,5 @@
 package com.fikt.seminarski.views;
 
-import javax.management.relation.Role;
-
 import com.fikt.seminarski.model.Subject;
 import com.fikt.seminarski.model.Upload;
 import com.fikt.seminarski.model.Work;
@@ -10,11 +8,11 @@ import io.dropwizard.views.View;
 
 public class UploadView extends View {
     private final Upload upload;
-    private final String role;
-    public UploadView(Upload upload, String role) {
+    private boolean isStudent = true; //temp
+
+    public UploadView(Upload upload) {
         super("upload.mustache");
         this.upload = upload;
-        this.role = role;
     }
 
     public Upload getUpload() {
@@ -34,7 +32,7 @@ public class UploadView extends View {
     }
     
     public boolean getIsStudent() {
-    	return (role.equals("student"));
+    	return isStudent;
     }
     
     public boolean getIsGraded() {

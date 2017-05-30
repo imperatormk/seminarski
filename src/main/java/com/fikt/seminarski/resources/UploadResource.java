@@ -80,20 +80,21 @@ public class UploadResource {
     
     @GET
     @Path("/{id}")
-	@RolesAllowed({"student", "teacher"})
+	@RolesAllowed("student")
     @UnitOfWork
     public UploadView findById(@Auth User user, @PathParam("id") IntParam id) {
     	Optional<Upload> uploadID = uploadService.getById(id.get());
     	if (uploadID.isPresent()) {
     		Upload upload = uploadID.get();
-			if (upload.getStudent().getId() == user.getId() || upload.getWork().getSubject().getTeacher().getId() == user.getId()) {
-				return new UploadView(upload, user.getRole());
+			if (upload.getStudent().getId() == user.getId()) {
+				return new UploadView(upload);
 			}
 			else {
 				return null;
 			}
     	}
     	else {
+    		System.out.println("null");
     		return null;
     	}
     }
@@ -108,9 +109,9 @@ public class UploadResource {
     	Optional<Upload> uploadID = uploadService.getById(id.get());
     	if (uploadID.isPresent()) {
     		Upload upload = uploadID.get();
+    		File file = new File(upload.getURL());
 			
-    		if (upload.getStudent().getId() == user.getId() || upload.getWork().getSubject().getTeacher().getId() == user.getId()) {				
-	    		File file = new File(upload.getURL());		
+			if ((upload.getStudent().getId() == user.getId() && user.getRole() == "student") || user.getRole() == "teacher") {
 				ResponseBuilder response = Response.ok((Object) file);
     		response.header("Content-Disposition",
     				"attachment; filename=" + file.getName());

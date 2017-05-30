@@ -26,34 +26,31 @@ package com.fikt.seminarski.resources;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fikt.seminarski.model.Student;
-import com.fikt.seminarski.model.User;
 import com.fikt.seminarski.service.StudentService;
 import com.fikt.seminarski.service.implementation.StudentServiceImpl;
 import com.fikt.seminarski.views.StudentListView;
 import com.fikt.seminarski.views.StudentView;
 
-import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jersey.params.IntParam;
 
-@RolesAllowed({"admin", "teacher"})
 @Path("/students")
 @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 public class StudentResource {
-	private static final Logger LOGGER = LoggerFactory.getLogger(StudentResource.class);
 
+    /**
+     * The DAO object to manipulate employees.
+     */
     private StudentService studentService;
     
     public StudentResource(SessionFactory sessionFactory) {
@@ -62,23 +59,44 @@ public class StudentResource {
     
     @GET
     @UnitOfWork
-    public StudentListView getAll(@Auth User user) {
+    public StudentListView getAll() {
     	List<Student> lst = studentService.getAll();
 
     	return new StudentListView(lst);
     }
     
+/*
+    @GET
+    @UnitOfWork
+    public StudentListView findByName(
+            @QueryParam("name") Optional<String> name
+    ) {
+        if (name.isPresent()) {
+            List<Student> stuList = studentService.findByName(name.get());
+            return new EmployeeListView(empName);
+        } else {
+        	List<Employee> lst = employeeDAO.findAll();
+        	//lst.get(0).setFirstName("test");
+            //return employeeDAO.findAll();
+        	
+        	return new EmployeeListView(lst);
+        }
+    }
+*/
+/*    @GET
+    @Path("/{id}")
+    @UnitOfWork
+    public Optional<Employee> findById(@PathParam("id") LongParam id) {
+        return employeeDAO.findById(id.get());
+    }*/
+    
     @GET
     @Path("/{id}")
     @UnitOfWork
-    @RolesAllowed({"admin", "teacher", "student"}) 
-    public StudentView findById(@Auth User user, @PathParam("id") IntParam id) {
+    public StudentView findById(@PathParam("id") IntParam id) {
     	Optional<Student> stuID = studentService.getById(id.get());
-    	if (stuID.isPresent() && (user.getId() == stuID.get().getId() || !user.getRole().equals("student"))) {
-    		return new StudentView(stuID.get()); // add URLs to table data and restrict results by teacher
-    	}
-    	else {
-    		return null;
-    	}    
-    }  
+        return new StudentView(stuID.get());
+    }
+    
+    
 }

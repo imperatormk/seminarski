@@ -2,6 +2,7 @@ sessionfactory improvement?
 different service init?
 static
 transaction managament
+cascade delete!
 api response
 communication between services: on service or resource lvl?
 general criteria in DAO & call with specific criteria from service (criteria=params)
@@ -9,11 +10,8 @@ autowire alternative?
 do not handle DB exceptions in code?
 general exception handling
 redirect URL string
-cascade delete!
-utf8 db
 
-rename all packages and change app title
-optimize dependencies
+
 
 
 *stream:map
