@@ -1,0 +1,24 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Upload Work</title>
+</head>
+<body>
+	{{#isRevision}}
+		<h1>Upload Work Revision: {{workTitle}}</h1>
+	{{/isRevision}}
+	{{^isRevision}}
+		<h1>Upload Work: {{workTitle}}</h1>
+	{{/isRevision}}
+    
+    <form action="/works/{{workID}}/upload" method="post" enctype="multipart/form-data">
+	   <label for="uploadName">Upload name:</label>
+	   <input type='text' name='uploadName'/></br>
+       <p>
+        Choose a file: <input type="file" name="filename" />
+       </p>
+	   <input type="hidden" name="oldID" value="{{oldID}}">
+       <input type="submit" value="Upload" />
+    </form>
+</body>
+</html>

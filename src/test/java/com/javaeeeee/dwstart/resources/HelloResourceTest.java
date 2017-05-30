@@ -23,7 +23,6 @@
  */
 package com.javaeeeee.dwstart.resources;
 
-import com.javaeeeee.dwstart.core.Greeting;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
@@ -33,6 +32,8 @@ import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
 import org.junit.Rule;
 import org.junit.Test;
+
+import com.fikt.seminarski.core.Greeting;
 
 /**
  *

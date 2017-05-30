@@ -1,33 +1,32 @@
 ## Configuration file for DWGettingStarted application.
 
 # User login.
-login: javaeeeee
+login: fikt
 # User  password.
 password: crimson
 
 #Server configuration.
 server:
-  registerDefaultExceptionMappers: false
-  applicationConnectors:
-    - type: http
-      port: 8080
-
+    applicationConnectors:
+        - type: http
+          port: 8080
+        - type: https
+          port: 8443
+          keyStorePath: seminarski.keystore
+          keyStorePassword: crimson
+          validateCerts: false
+          validatePeers: false
 
 # Database settings.
 database:
    # the name of the JDBC driver, mysql in our case
    driverClass: com.mysql.jdbc.Driver
    # the username
-   user: bd474772c19810
+   user: root
    # the password
-   password: 41299701
+   password: pece123!
    # the JDBC URL
-   url: jdbc:mysql://us-cdbr-iron-east-03.cleardb.net:3306/heroku_873473f052b8949
-   # max connections
-   maxSize: 10
-   # the dialect
-   properties:
-    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+   url: jdbc:mysql://localhost:3306/testdb2
 
 #API settings
 #API URL

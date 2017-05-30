@@ -1,0 +1,22 @@
+<html>
+<head><title></title></head>
+<body>
+<div class="top">
+<h1>My uploads</h1>
+<table border="1">
+    <th>Upload name</th>
+	<th>Work</th>
+	<th>Subject</th>
+	<th>Status</th>
+	{{#uploadList}}
+	<tr>
+	    <td><a href=/uploads/{{id}}>{{title}}</a></td>
+		<td><a href=/works/{{work.id}}>{{work.title}}</a></td>
+		<td><a href=/subjects/{{work.subject.id}}>{{work.subject.subjectName}}</a></td>	
+		<td>{{stateStr}}</td>				
+	</tr>
+	{{/uploadList}}
+</table>
+   
+</div>
+</body></html>

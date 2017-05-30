@@ -32,6 +32,10 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.SslConfigurator;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.junit.Test;
+
+import com.fikt.seminarski.MainApplication;
+import com.fikt.seminarski.MainConfiguration;
+
 import static org.junit.Assert.*;
 import org.junit.ClassRule;
 
@@ -46,8 +50,8 @@ public class IntegrationTest {
      * Starts up the application.
      */
     @ClassRule
-    public static final DropwizardAppRule<DWGettingStartedConfiguration> RULE
-            = new DropwizardAppRule<>(DWGettingStartedApplication.class,
+    public static final DropwizardAppRule<MainConfiguration> RULE
+            = new DropwizardAppRule<>(MainApplication.class,
                     "config.yml");
 
     /**

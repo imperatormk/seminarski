@@ -1,0 +1,47 @@
+<html>
+<head><title></title></head>
+<body>
+<div class="top">
+	<div class="sName">Subject name: {{subject.subjectName}}</div>
+	<div class="wTitle">Work title: {{work.title}}</div></br>
+	<div class="uTitle">Upload: {{upload.title}}</div></br>
+	
+	{{#isGraded}}
+		<div class="grade">Grade: {{upload.grade}}</div></br>
+	{{/isGraded}}
+	
+	<div class="uFile">File: {{uploadFile}}</br></br>
+	   <a href="/uploads/{{upload.id}}/download">
+	      <button>Download</button>
+	   </a>
+	</div></br>
+	
+	<div class="">
+		{{#isStudent}}		  
+		  {{^isGraded}}
+			<a href="/uploads/{{upload.id}}/delete"><button>Remove upload</button></a>
+			<a href="/works/{{upload.work.id}}/upload"><button>Upload revision</button></a>
+		  {{/isGraded}}
+		{{/isStudent}}
+		
+		{{^isStudent}}
+		  {{^isGraded}}
+			<label>Grade:</label>
+			<select>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+			</select>
+			<button>Grade</button>
+		  {{/isGraded}}
+		  
+		  {{^isRequested}}
+		    <button>Request revision</button>
+		  {{/isRequested}}
+		{{/isStudent}}
+	</div>
+	
+</div>
+</body></html>

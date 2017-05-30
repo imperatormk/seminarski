@@ -1,0 +1,22 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript"></script>
+<script>
+      function logout(to_url) {
+    var out = window.location.href.replace(/:\/\//, '://log:out@');
+
+    jQuery.get(out).error(function() {
+        window.location = to_url;
+    });
+}
+
+
+  $(document).ready(function () 
+  {
+     logout(window.location.href); 
+  });
+  </script>
+  </head>
+  <body></body>
+  </html>

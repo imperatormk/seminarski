@@ -24,7 +24,6 @@
 package com.javaeeeee.dwstart.resources;
 
 import java.util.Optional;
-import com.javaeeeee.dwstart.core.CurrencyData;
 import java.util.Date;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.client.Client;
@@ -47,6 +46,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.fikt.seminarski.core.CurrencyData;
 
 /**
  * A test for the ConverterResource class.
